@@ -12,3 +12,7 @@ Future considerations:
 - Include rookies in predictions (using draft position, college stats, etc.)
 
 The current ridge regression model showed ~0.25 R^2 value for each position, as well as the model predicting 50% of the test dataset within 15% of the actual PPG. However, this could be due to the relatively tame nature of the model.
+
+File information:
+- functions.py: includes function to calculate PPR score as well as extract and clean player data
+- model.py: builds and evaluates model
