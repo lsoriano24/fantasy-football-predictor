@@ -1,6 +1,6 @@
 # fantasy-football-predictor
 
-Utilized ridge regression to predict fantasy football players' next year PPG based on NFL data from 2013-2022. This model currently supports QBs, RBs, and WRs. A ridge regression was used to account for multicollinearity between predictors (e.g. receptions is positively correlated with recieving yards), as well as to balance the high-dimensionality of the data. The model considers in-game statistics on a per-game basis from previous seasons, as well as the player's age.
+Utilized ridge regression to predict fantasy football players' next year PPG based on NFL data from 2013-2022. Data was obtained from https://www.pro-football-reference.com/. This model currently supports QBs, RBs, and WRs. A ridge regression was used to account for multicollinearity between predictors (e.g. receptions is positively correlated with recieving yards), as well as to balance the high-dimensionality of the data. The model considers in-game statistics on a per-game basis from previous seasons, as well as the player's age.
 
 Assumptions made for training data:
 - Player played at least 10 games in the previous year (to remove injuries as outliers)
