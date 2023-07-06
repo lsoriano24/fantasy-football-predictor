@@ -11,25 +11,28 @@ def model(pos: str):
     if pos == 'QB':
         nfl_mod = nfl_data[nfl_data['Pos'] == 'QB']
         nfl_pred = nfl_pred[nfl_pred['Pos'] == 'QB']
-        X = nfl_mod[['Age', 'Cmp', 'PassAtt', 'PassYds', 'PassTD', 'Int', 'RushAtt', 'RushYds', 'RushTD']]
-        x_23 = nfl_pred[['Age', 'Cmp', 'PassAtt', 'PassYds', 'PassTD', 'Int', 'RushAtt', 'RushYds', 'RushTD']]
+        X = nfl_mod[['G', 'Age', 'Cmp', 'PassAtt', 'PassYds', 'PassTD', 'Int', 'RushAtt', 'RushYds', 'RushTD']]
+        x_23 = nfl_pred[['G', 'Age', 'Cmp', 'PassAtt', 'PassYds', 'PassTD', 'Int', 'RushAtt', 'RushYds', 'RushTD']]
     elif pos == 'RB':
         nfl_mod = nfl_data[nfl_data['Pos'] == 'RB']
         nfl_pred = nfl_pred[nfl_pred['Pos'] == 'RB']
-        X = nfl_mod[['Age', 'Tgt', 'Rec', 'RecYds', 'RecTD', 'RushAtt', 'RushYds', 'RushTD']]
-        x_23 = nfl_pred[['Age', 'Tgt', 'Rec', 'RecYds', 'RecTD', 'RushAtt', 'RushYds', 'RushTD']]
+        X = nfl_mod[['G', 'Age', 'Tgt', 'Rec', 'RecYds', 'RecTD', 'RushAtt', 'RushYds', 'RushTD']]
+        x_23 = nfl_pred[['G', 'Age', 'Tgt', 'Rec', 'RecYds', 'RecTD', 'RushAtt', 'RushYds', 'RushTD']]
     elif pos == 'WR':
         nfl_mod = nfl_data[nfl_data['Pos'] == 'WR']
         nfl_pred = nfl_pred[nfl_pred['Pos'] == 'WR']
-        X = nfl_mod[['Age', 'Tgt', 'Rec', 'RecYds', 'RecTD']]
-        x_23 = nfl_pred[['Age', 'Tgt', 'Rec', 'RecYds', 'RecTD']]
+        X = nfl_mod[['G', 'Age', 'Tgt', 'Rec', 'RecYds', 'RecTD']]
+        x_23 = nfl_pred[['G', 'Age', 'Tgt', 'Rec', 'RecYds', 'RecTD']]
     
     y = nfl_mod['Percent Change']
-
-
     # Build model
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state=42)
     
+    # Ensure training dataset eliminates players who played an insufficient number of games in a season
+    y_train = y_train[X_train['G']>=8]
+    X_train = X_train.loc[X_train['G']>=8]    
+
+
     mod = Ridge(alpha=0.1)
     mod.fit(X_train, y_train)
     print('Coefficients:', mod.coef_)
