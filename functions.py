@@ -67,7 +67,7 @@ def nfl(pos: str):
     # Edge case fixing
     nfl['Year'] = nfl['Year'].astype(int)
     # Ensures that player played a sufficient number of games
-    nfl = nfl[nfl['G'] >= 10]
+    nfl = nfl[nfl['G'] >= 1]
 
     # Apply fantasy score function to add fantasy score columns
     nfl['PPG'] = nfl.apply(score, axis=1)
